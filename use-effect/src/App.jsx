@@ -4,14 +4,17 @@ import PokemonList from "./components/PokemonList";
 import { api } from "./services/api";
 import { v4 as uuidv4 } from 'uuid';
 import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 import SearchForm from "./components/SearchForm";
+import PokemonTeam from "./components/PokemonTeam";
 
 function App() {
    const localPokemonTeam = localStorage.getItem("@POKETEAM");
    const [loading, setLoading] = useState(false);
    const [pokemonList, setPokemonList] = useState([]);
    const [pokemonTeam, setPokemonTeam] = useState(localPokemonTeam ? JSON.parse(localPokemonTeam) : []);
+   const [pokemonTeamModal, setPokemonTeamModal] = useState(false);
    const [search, setSearch] = useState("");
 
    const searchPokemonList = pokemonList.filter((pokemon) => {
@@ -64,20 +67,12 @@ function App() {
             <Loading />
          ) : (
             <main>
-               <ul>
-                  
-                  {pokemonTeam.map(pokemon => (
-                     <li key={pokemon.id}>
-                        <h3>{pokemon.name}</h3>
-                        <button onClick={() => removePokemonFromTeam(pokemon.id)}>Remover do time</button>
-                     </li>
-                  ))}
-                  
-               </ul>
+               <button onClick={() => setPokemonTeamModal(!pokemonTeamModal)}>Abrir e fechar time</button>
+               {pokemonTeamModal && <PokemonTeam pokemonTeam={pokemonTeam} removePokemonFromTeam={removePokemonFromTeam} setPokemonTeamModal={setPokemonTeamModal} />}
                <SearchForm setSearch={setSearch} />
                {search && <div>
                   <p>Resultados de busca para: {search}</p>
-                  <button onClick={() => setSearch("")}>Limpar a busca</button>               
+                  <button on onClick={() => setSearch("")}>Limpar a busca</button>               
                </div>}
                <PokemonList searchPokemonList={searchPokemonList} addPokemonToTeam={addPokemonToTeam}/>
             </main>            
