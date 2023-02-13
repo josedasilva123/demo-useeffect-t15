@@ -29,6 +29,13 @@ const Modal = () => {
     }
   }, [])
 
+  useEffect(() => {
+    console.log('Montagem');
+    return () => {
+      console.log('Desmontagem');
+    }
+  }, [counter])
+
   return (
     <div>
         <h1>{counter}</h1>
