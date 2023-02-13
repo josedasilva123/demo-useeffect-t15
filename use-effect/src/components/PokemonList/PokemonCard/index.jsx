@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
+import { PokemonTeamContext } from "../../../providers/PokemonTeamContext";
 
-const PokemonCard = ({pokemon, addPokemonToTeam}) => {
+const PokemonCard = ({pokemon}) => {
+   const { addPokemonToTeam } = useContext(PokemonTeamContext);
+
    return (
       <li key={pokemon.name}>
          <h3>{pokemon.name}</h3>

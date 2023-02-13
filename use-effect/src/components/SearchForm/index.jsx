@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { PokemonListContext } from '../../providers/PokemonListContext';
 
-const SearchForm = ({setSearch}) => {
+const SearchForm = () => {
+  const { setSearch } = useContext(PokemonListContext);
   const [searchValue, setSearchValue] = useState("");  
 
   const submit = (event) => {

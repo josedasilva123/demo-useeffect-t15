@@ -1,9 +1,14 @@
-import React, { useEffect, useRef } from "react";
+import React, { useContext } from "react";
 import { useOutclick } from "../../hooks/useOutclick";
+import { PokemonModalContext } from "../../providers/PokemonModalContext";
+import { PokemonTeamContext } from "../../providers/PokemonTeamContext";
 import PokemonTeamCard from "./PokemonTeamCard";
 import { StyledPokemonTeam } from "./style";
 
-const PokemonTeam = ({ pokemonTeam, removePokemonFromTeam, setPokemonTeamModal }) => {
+const PokemonTeam = () => {
+   const { pokemonTeam } = useContext(PokemonTeamContext); //importação
+   const { setPokemonTeamModal } = useContext(PokemonModalContext); //importação
+   
    const ref = useOutclick(() => {
       setPokemonTeamModal(false); 
    });
@@ -12,7 +17,7 @@ const PokemonTeam = ({ pokemonTeam, removePokemonFromTeam, setPokemonTeamModal }
       <StyledPokemonTeam ref={ref}>
          <button onClick={() => setPokemonTeamModal(false)}>Fechar</button>
          {pokemonTeam.map((pokemon) => (
-            <PokemonTeamCard key={pokemon.id} pokemon={pokemon} removePokemonFromTeam={removePokemonFromTeam} />
+            <PokemonTeamCard key={pokemon.id} pokemon={pokemon} />
          ))}
       </StyledPokemonTeam>
    );
