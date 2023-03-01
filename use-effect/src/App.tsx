@@ -23,7 +23,7 @@ function App() {
                <SearchForm />
                {search && <div>
                   <p>Resultados de busca para: {search}</p>
-                  <button on onClick={() => setSearch("")}>Limpar a busca</button>               
+                  <button onClick={() => setSearch("")}>Limpar a busca</button>               
                </div>}
                <PokemonList />
             </main>            

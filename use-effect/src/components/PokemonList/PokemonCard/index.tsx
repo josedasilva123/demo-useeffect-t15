@@ -1,7 +1,12 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
+import { IPokemon } from "../../../providers/PokemonListContext";
 import { PokemonTeamContext } from "../../../providers/PokemonTeamContext";
 
-const PokemonCard = ({pokemon}) => {
+interface IPokemonCardProps{
+   pokemon: IPokemon;
+}
+
+const PokemonCard = ({pokemon}: IPokemonCardProps) => {
    const { addPokemonToTeam } = useContext(PokemonTeamContext);
 
    return (

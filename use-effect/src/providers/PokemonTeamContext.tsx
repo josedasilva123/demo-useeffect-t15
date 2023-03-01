@@ -1,19 +1,31 @@
 import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
+import { IDefaultProviderProps } from "./@types";
+import { IPokemon } from "./PokemonListContext";
 
-export const PokemonTeamContext = createContext({});
+export interface ITeamPokemon extends IPokemon{
+   id: string;
+}
 
-export const PokemonTeamProvider = ({ children }) => {
+interface IPokemonTeamContext{
+   pokemonTeam: ITeamPokemon[];
+   addPokemonToTeam: (pokemon: IPokemon) => void;
+   removePokemonFromTeam: (pokemonId: string) => void
+}
+
+export const PokemonTeamContext = createContext({} as IPokemonTeamContext);
+
+export const PokemonTeamProvider = ({ children }: IDefaultProviderProps) => {
    const localPokemonTeam = localStorage.getItem("@POKETEAM");
 
-   const [pokemonTeam, setPokemonTeam] = useState(localPokemonTeam ? JSON.parse(localPokemonTeam) : []);
+   const [pokemonTeam, setPokemonTeam] = useState<ITeamPokemon[]>(localPokemonTeam ? JSON.parse(localPokemonTeam) : []);
 
    useEffect(() => {
       localStorage.setItem("@POKETEAM", JSON.stringify(pokemonTeam));
    }, [pokemonTeam]);
 
-   const addPokemonToTeam = (pokemon) => {
+   const addPokemonToTeam = (pokemon: IPokemon) => {
       if (pokemonTeam.length < 6) {
          const newPokemon = { ...pokemon, id: uuidv4() };
          setPokemonTeam([...pokemonTeam, newPokemon]);
@@ -23,12 +35,11 @@ export const PokemonTeamProvider = ({ children }) => {
       }
    };
 
-   const removePokemonFromTeam = (pokemonId) => {
+   const removePokemonFromTeam = (pokemonId: string) => {
       const newPokemonTeam = pokemonTeam.filter((pokemon) => pokemon.id !== pokemonId);
       setPokemonTeam(newPokemonTeam);
    };
 
-   //value - exportador
    return (
       <PokemonTeamContext.Provider value={{ pokemonTeam, addPokemonToTeam, removePokemonFromTeam }}>{children}</PokemonTeamContext.Provider>
    );

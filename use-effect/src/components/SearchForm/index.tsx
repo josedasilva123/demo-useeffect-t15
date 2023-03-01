@@ -1,11 +1,11 @@
-import React, { useContext, useState } from 'react'
+import React, { FormEvent, useContext, useState } from 'react'
 import { PokemonListContext } from '../../providers/PokemonListContext';
 
 const SearchForm = () => {
   const { setSearch } = useContext(PokemonListContext);
   const [searchValue, setSearchValue] = useState("");  
 
-  const submit = (event) => {
+  const submit = (event: FormEvent) => {
     event.preventDefault();
     setSearch(searchValue);
     setSearchValue("");

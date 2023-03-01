@@ -1,7 +1,11 @@
-import React, { useContext } from "react";
-import { PokemonTeamContext } from "../../../providers/PokemonTeamContext";
+import { useContext } from "react";
+import { ITeamPokemon, PokemonTeamContext } from "../../../providers/PokemonTeamContext";
 
-const PokemonTeamCard = ({ pokemon }) => {
+interface IPokemonTeamCardProps{
+   pokemon: ITeamPokemon;
+}
+
+const PokemonTeamCard = ({ pokemon }: IPokemonTeamCardProps) => {
    const { removePokemonFromTeam } = useContext(PokemonTeamContext);
 
    return (
